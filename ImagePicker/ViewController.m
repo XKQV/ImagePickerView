@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "Demo2ViewController.h"
-@interface ViewController ()
+@interface ViewController () <imageProtocol>
 
 @end
 
@@ -24,9 +24,11 @@
     myFriendVc.view.backgroundColor = [UIColor blueColor];
     [self.view addSubview:myFriendVc.view];
     self.navigationItem.rightBarButtonItem = myFriendVc.navigationItem.rightBarButtonItem;
-    
+    myFriendVc.delegate = self;
 }
 
-
+-(void)selectedImages:(UIImage *)image {
+    
+}
 
 @end

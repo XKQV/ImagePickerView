@@ -12,6 +12,7 @@
 
 static const CGFloat kPhotoViewMargin = 12.0;
 
+
 @interface Demo2ViewController ()<HXPhotoViewDelegate,UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) HXPhotoManager *manager;
@@ -24,6 +25,7 @@ static const CGFloat kPhotoViewMargin = 12.0;
 @property (assign, nonatomic) BOOL needDeleteItem;
 
 @property (assign, nonatomic) BOOL showHud;
+
 
 @end
 
@@ -240,7 +242,7 @@ static const CGFloat kPhotoViewMargin = 12.0;
         // imageArray 获取成功的image数组
         // errorArray 获取失败的model数组
         for (UIImage *image in imageArray) {
-            
+            [self.delegate selectedImages:image];
              NSSLog(@"\nimage: %@\nerror: %@",imageArray,errorArray);
         }
        

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol imageProtocol <NSObject>
+
+-(void)selectedImages:(UIImage *)image;
+
+@end
 
 @interface Demo2ViewController : UIViewController
-
+@property (nonatomic, weak) id<imageProtocol>delegate;
 @end
