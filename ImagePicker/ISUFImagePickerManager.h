@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ISUFCollectionViewCell.h"
+#import <QBImagePickerController/QBImagePickerController.h>
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ISUFImagePickerManager : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface ISUFImagePickerManager : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *imageArray;
+@property (nonatomic, assign) CGRect collectionViewFrame;
 
 @end
 

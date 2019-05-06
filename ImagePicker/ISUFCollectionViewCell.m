@@ -22,7 +22,7 @@
         
         //label not used 
         _botlabel = [[UILabel alloc]initWithFrame:CGRectMake(40, 80, 50,20)];
-        [self.contentView addSubview:_botlabel];
+//        [self.contentView addSubview:_botlabel];
         
         self.layer.cornerRadius = 4.0;
         [self.layer setMasksToBounds:YES];

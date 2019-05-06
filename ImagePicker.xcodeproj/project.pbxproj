@@ -21,7 +21,6 @@
 		EA4C18B622783ED800162249 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C18B522783ED800162249 /* main.m */; };
 		EA4C18C022783ED800162249 /* ImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C18BF22783ED800162249 /* ImagePickerTests.m */; };
 		EA4C18CB22783ED800162249 /* ImagePickerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C18CA22783ED800162249 /* ImagePickerUITests.m */; };
-		EA5307CF2278692300F922CF /* ISSettingImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5307CD2278692300F922CF /* ISSettingImagePickerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,8 +71,6 @@
 		EA4C18C622783ED800162249 /* ImagePickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4C18CA22783ED800162249 /* ImagePickerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerUITests.m; sourceTree = "<group>"; };
 		EA4C18CC22783ED800162249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA5307CD2278692300F922CF /* ISSettingImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISSettingImagePickerViewController.m; sourceTree = "<group>"; };
-		EA5307D02278694700F922CF /* ISSettingImagePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISSettingImagePickerViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +127,6 @@
 		EA2BB622227FD16E0006319E /* test */ = {
 			isa = PBXGroup;
 			children = (
-				EA5307D02278694700F922CF /* ISSettingImagePickerViewController.h */,
-				EA5307CD2278692300F922CF /* ISSettingImagePickerViewController.m */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -354,11 +349,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ImagePicker/Pods-ImagePicker-resources.sh",
-				"${PODS_ROOT}/HXPhotoPicker/照片选择器/HXPhotoPicker/Resource/HXPhotoPicker.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HXPhotoPicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -410,7 +405,6 @@
 			files = (
 				EA4C18AB22783ED700162249 /* ViewController.m in Sources */,
 				EA4C18B622783ED800162249 /* main.m in Sources */,
-				EA5307CF2278692300F922CF /* ISSettingImagePickerViewController.m in Sources */,
 				EA2BB621227FBFF50006319E /* ISUFCollectionViewCell.m in Sources */,
 				EA4C18A822783ED700162249 /* AppDelegate.m in Sources */,
 				EA2BB61E227EFE5D0006319E /* ISUFImagePickerManager.m in Sources */,

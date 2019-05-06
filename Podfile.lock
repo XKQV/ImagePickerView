@@ -1,36 +1,16 @@
 PODS:
-  - HXPhotoPicker (2.2.9):
-    - SDWebImage (~> 4.4.6)
-    - YYWebImage
-  - SDWebImage (4.4.6):
-    - SDWebImage/Core (= 4.4.6)
-  - SDWebImage/Core (4.4.6)
-  - YYCache (1.0.4)
-  - YYImage (1.0.4):
-    - YYImage/Core (= 1.0.4)
-  - YYImage/Core (1.0.4)
-  - YYWebImage (1.0.5):
-    - YYCache
-    - YYImage
+  - QBImagePickerController (3.4.0)
 
 DEPENDENCIES:
-  - HXPhotoPicker (~> 2.2.9)
+  - QBImagePickerController
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - HXPhotoPicker
-    - SDWebImage
-    - YYCache
-    - YYImage
-    - YYWebImage
+    - QBImagePickerController
 
 SPEC CHECKSUMS:
-  HXPhotoPicker: 9ddb80fba3b591c4b5c3b80b0498ee3893d80b5a
-  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
-  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
-  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
-  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
 
-PODFILE CHECKSUM: 8b6e6aff7917c27750a2458ec59ad9836de49887
+PODFILE CHECKSUM: 935c175e0b06649678466a21a04abb87ea5d4004
 
 COCOAPODS: 1.5.3

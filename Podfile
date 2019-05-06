@@ -6,7 +6,8 @@ target 'ImagePicker' do
   # use_frameworks!
 
   # Pods for ImagePicker
-pod 'HXPhotoPicker', '~> 2.2.9'
+
+pod 'QBImagePickerController'
   target 'ImagePickerTests' do
     inherit! :search_paths
     # Pods for testing
