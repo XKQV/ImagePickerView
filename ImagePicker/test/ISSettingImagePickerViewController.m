@@ -6,18 +6,17 @@
 //  Copyright © 2017年 洪欣. All rights reserved.
 //
 
-#import "Demo2ViewController.h" 
+#import "ISSettingImagePickerViewController.h"
 #import "HXPhotoPicker.h"
 
 
 static const CGFloat kPhotoViewMargin = 12.0;
 
 
-@interface Demo2ViewController ()<HXPhotoViewDelegate,UIImagePickerControllerDelegate>
+@interface ISSettingImagePickerViewController ()<HXPhotoViewDelegate,UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) HXPhotoManager *manager;
 @property (strong, nonatomic) HXPhotoView *photoView;
-@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) HXDatePhotoToolManager *toolManager;
 
 @property (strong, nonatomic) UIButton *bottomView;
@@ -29,7 +28,7 @@ static const CGFloat kPhotoViewMargin = 12.0;
 
 @end
 
-@implementation Demo2ViewController
+@implementation ISSettingImagePickerViewController
 - (UIButton *)bottomView {
     if (!_bottomView) {
         _bottomView = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -155,14 +154,7 @@ static const CGFloat kPhotoViewMargin = 12.0;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    scrollView.alwaysBounceVertical = YES;
-    [self.view addSubview:scrollView];
-    self.scrollView = scrollView;
-    
-    CGFloat width = scrollView.frame.size.width;
+    CGFloat width = self.view.bounds.size.width;
     HXPhotoView *photoView = [HXPhotoView photoManager:self.manager];
     photoView.frame = CGRectMake(kPhotoViewMargin, kPhotoViewMargin, width - kPhotoViewMargin * 2, 0);
     photoView.delegate = self;
@@ -174,14 +166,16 @@ static const CGFloat kPhotoViewMargin = 12.0;
 //    photoView.disableaInteractiveTransition = YES;
     [photoView.collectionView reloadData];
     photoView.backgroundColor = [UIColor whiteColor];
-    [scrollView addSubview:photoView];
+    
     self.photoView = photoView;
+//        [self.view addSubview:scrollView];
+    [self.view addSubview:photoView];
     
     UIBarButtonItem *cameraItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
     
     self.navigationItem.rightBarButtonItems = @[cameraItem];
     
-    [self.view addSubview:self.bottomView];
+//    [self.view addSubview:self.bottomView];
 }
 - (void)dealloc {
     NSSLog(@"dealloc");
@@ -205,39 +199,6 @@ static const CGFloat kPhotoViewMargin = 12.0;
 
 - (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
     
-//    for (HXPhotoModel *photoModel in allList) {
-//        [photoModel requestPreviewImageWithSize:PHImageManagerMaximumSize startRequestICloud:^(PHImageRequestID iCloudRequestId, HXPhotoModel *model) {
-//            // 如果照片在iCloud上会去下载,此回调代表开始下载iCloud上的照片
-//            // 如果照片在本地存在此回调则不会走
-//        } progressHandler:^(double progress, HXPhotoModel *model) {
-//            // iCloud下载进度
-//            // 如果为网络图片,则是网络图片的下载进度
-//        } success:^(UIImage *image, HXPhotoModel *model, NSDictionary *info) {
-//            // 获取成功
-//
-//            NSLog(@"success");
-//        } failed:^(NSDictionary *info, HXPhotoModel *model) {
-//            // 获取失败
-//        }];
-//    }
-   
-    
-   
-    
-//    // 获取 imageData
-//    // 如果为网络图片的话会先下载
-//    [photoModel requestImageDataStartRequestICloud:^(PHImageRequestID iCloudRequestId, HXPhotoModel *model) {
-//        // 开始下载iCloud上照片的imageData
-//    } progressHandler:^(double progress, HXPhotoModel *model) {
-//        // iCloud下载进度
-//    } success:^(NSData *imageData, UIImageOrientation orientation, HXPhotoModel *model, NSDictionary *info) {
-//        // 获取成功
-//          NSLog(@"success");
-//    } failed:^(NSDictionary *info, HXPhotoModel *model) {
-//        // 获取失败
-//    }];
-    
-    
     [allList hx_requestImageWithOriginal:isOriginal completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
         // imageArray 获取成功的image数组
         // errorArray 获取失败的model数组
@@ -255,7 +216,10 @@ static const CGFloat kPhotoViewMargin = 12.0;
 
 - (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
     NSSLog(@"%@",NSStringFromCGRect(frame));
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(frame) + kPhotoViewMargin);
+    frame.origin = self.view.frame.origin;
+    frame.size.height += kPhotoViewMargin;
+    self.view.frame = frame;
+    [self.delegate heightForCellChanged];
     
 }
 

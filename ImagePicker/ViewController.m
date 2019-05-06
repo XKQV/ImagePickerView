@@ -7,28 +7,36 @@
 //
 
 #import "ViewController.h"
-#import "Demo2ViewController.h"
-@interface ViewController () <imageProtocol>
+#import "ISUFImagePickerManager.h"
 
+@interface ViewController ()
+@property (nonatomic, strong) ISUFImagePickerManager *manager;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-//    
-    Demo2ViewController *myFriendVc = [Demo2ViewController new];
-    [self addChildViewController:myFriendVc];
-    myFriendVc.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height/3);
-    myFriendVc.view.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:myFriendVc.view];
-    self.navigationItem.rightBarButtonItem = myFriendVc.navigationItem.rightBarButtonItem;
-    myFriendVc.delegate = self;
+//    _pickerView = [ISSettingImagePickerViewController new];
+//    [self addChildViewController:_pickerView];
+//    _pickerView.view.frame = CGRectMake(0, 100, 0, 0);
+//    _pickerView.view.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:_pickerView.view];
+//    _pickerView.delegate = self;
+//
+//    _testView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_pickerView.view.frame),100, 100)];
+//    _testView.backgroundColor = [UIColor yellowColor];
+//    [self.view addSubview:_testView];
+//
+//
+        _manager = [[ISUFImagePickerManager alloc]init];
+    
+        [self.view addSubview:_manager.collectionView];
+
+
 }
 
--(void)selectedImages:(UIImage *)image {
-    
-}
+
+
 
 @end
