@@ -22,11 +22,20 @@
         _botlabel = [[UILabel alloc]initWithFrame:CGRectMake(40, 80, 50,20)];
         [self.contentView addSubview:_botlabel];
         
+        self.layer.cornerRadius = 4.0;
+        [self.layer setMasksToBounds:YES];
+        
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
          _deleteBtn.frame = CGRectMake(80, 0, 20, 20);
-        _deleteBtn.backgroundColor = [UIColor redColor];
-        _deleteBtn.titleLabel.text = @"111";
-        [_deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+        _deleteBtn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_deleteBtn.bounds      byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight    cornerRadii:CGSizeMake(4, 4)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = _deleteBtn.bounds;
+        maskLayer.path = maskPath.CGPath;
+        _deleteBtn.layer.mask = maskLayer;
+
+        [_deleteBtn setImage:[UIImage imageNamed:@"cross"] forState:UIControlStateNormal];
         [_deleteBtn addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
         _deleteBtn.alpha = 0.5;
         
