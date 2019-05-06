@@ -31,7 +31,8 @@
 //
         _manager = [[ISUFImagePickerManager alloc]init];
     
-        [self.view addSubview:_manager.collectionView];
+    [self addChildViewController:_manager];
+    [self.view addSubview:_manager.collectionView];
 
 
 }

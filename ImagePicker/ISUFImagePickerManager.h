@@ -11,7 +11,7 @@
 #import "ISUFCollectionViewCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ISUFImagePickerManager : NSObject<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate>
+@interface ISUFImagePickerManager : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *imageArray;

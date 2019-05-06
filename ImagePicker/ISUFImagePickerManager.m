@@ -63,10 +63,9 @@
     
     if (indexPath.row == _imageArray.count) {
         [_imageArray addObject:@"3"];
+            [self setupActionsheet];
         [collectionView reloadData];
     }
-    
-    
 }
 
 -(void)pressedDeleteBtTag:(int)tag{
@@ -74,6 +73,29 @@
     NSLog(@"deleted cell %d",tag);
     [_imageArray removeObjectAtIndex:tag];
     [_collectionView reloadData];
+
+}
+
+-(void)setupActionsheet{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        UIPopoverPresentationController *pop = [alertController popoverPresentationController];
+        pop.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        pop.sourceView = self.collectionView;
+        pop.sourceRect = self.collectionView.bounds;
+    }
+    [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        [self goCameraViewController];
+                    NSLog(@"goCameraViewController");
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        [self directGoPhotoViewController];
+                    NSLog(@"directGoPhotoViewController");
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

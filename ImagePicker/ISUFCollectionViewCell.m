@@ -29,7 +29,6 @@
         [_deleteBtn setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [_deleteBtn addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
         _deleteBtn.alpha = 0.5;
-//        [self.contentView addSubview:_deleteBtn];
         
     }
     
