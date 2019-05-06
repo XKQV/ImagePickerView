@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ISUFImagePickerManager : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray *imageArray;
+@property (nullable, nonatomic, strong) NSMutableArray *imageArray;
 @property (nonatomic, assign) CGRect collectionViewFrame;
 
 @end

@@ -38,7 +38,7 @@
     [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
     imageBt.titleLabel.text = @"HIHIHIHI";
     imageBt.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:imageBt];
+//    [self.view addSubview:imageBt];
     
 }
 
