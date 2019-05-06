@@ -34,10 +34,20 @@
     [self addChildViewController:_manager];
     [self.view addSubview:_manager.collectionView];
 
-
+    UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 300, 100, 100)];
+    [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
+    imageBt.titleLabel.text = @"HIHIHIHI";
+    imageBt.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:imageBt];
+    
 }
 
 
-
+-(void)currentImages{
+    for (UIImage *image in _manager.imageArray) {
+        NSLog(@"images");
+    }
+ 
+}
 
 @end

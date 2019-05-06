@@ -100,7 +100,7 @@
         pop.sourceRect = self.collectionView.bounds;
     }
     [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //        [self goCameraViewController];
+                [self goCameraViewController];
         NSLog(@"goCameraViewController");
     }]];
     
@@ -120,6 +120,36 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+#pragma mark -- Camera
+-(void)goCameraViewController{
+    
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        return;
+    }
+    
+        //创建ImagePickController
+        UIImagePickerController *myPicker = [[UIImagePickerController alloc]init];
+    
+        //创建源类型
+        UIImagePickerControllerSourceType mySourceType = UIImagePickerControllerSourceTypeCamera ;
+    
+        myPicker.sourceType = mySourceType;
+    
+        //设置代理
+        myPicker.delegate = self;
+        //设置可编辑
+        //    myPicker.allowsEditing = YES;
+    
+        //通过模态的方式推出系统相册
+        [self presentViewController:myPicker animated:YES completion:^{
+            NSLog(@"进入相册");
+        }];
+    
+}
+
+
+#pragma mark -- Photo library
 -(void)directGoPhotoViewController{
     
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -190,20 +220,23 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
-
-//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-//{
-//    //取得所选取的图片,原大小,可编辑等，info是选取的图片的信息字典
-//    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    
-//    //设置图片进相框
-//    [_imageArray addObject:selectImage];
-//    [_collectionView reloadData];
-//    [picker dismissViewControllerAnimated:YES completion:^{
-//        NSLog(@"模态返回") ;
-//        
-//    }];
-//}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    //取得所选取的图片,原大小,可编辑等，info是选取的图片的信息字典
+    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    //设置图片进相框
+    [_imageArray addObject:selectImage];
+    [self updateCollectionViewHeight];
+    [_collectionView reloadData];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"模态返回") ;
+        
+    }];
+}
 
 @end
