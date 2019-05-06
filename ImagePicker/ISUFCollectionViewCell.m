@@ -14,17 +14,21 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        //imageview
         _topImage  = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         _topImage.clipsToBounds = YES;
         _topImage.contentMode = UIViewContentModeScaleAspectFill;
         [self.contentView addSubview:_topImage];
         
+        //label not used 
         _botlabel = [[UILabel alloc]initWithFrame:CGRectMake(40, 80, 50,20)];
         [self.contentView addSubview:_botlabel];
         
         self.layer.cornerRadius = 4.0;
         [self.layer setMasksToBounds:YES];
         
+        
+        //delete button
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
          _deleteBtn.frame = CGRectMake(80, 0, 20, 20);
         _deleteBtn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
