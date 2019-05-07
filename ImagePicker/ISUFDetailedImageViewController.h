@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ISUFDetailedImageViewController : UIViewController
-
+@property (nonatomic, strong)UINavigationController *navigationController;
 @end
 
 NS_ASSUME_NONNULL_END

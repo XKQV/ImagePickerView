@@ -135,7 +135,7 @@
         
         UIImageView *tempImageView = [[UIImageView alloc]initWithFrame:CGRectMake((scrollViewWidth*i),0 , scrollViewWidth, scrollViewHeight)];
         tempImageView.image = _imageArray[i];
-        tempImageView.clipsToBounds = YES;
+        tempImageView.contentMode = UIViewContentModeScaleToFill;
         [imageScrollView addSubview:tempImageView];
         
     }
