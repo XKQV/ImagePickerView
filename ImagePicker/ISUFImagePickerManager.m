@@ -144,7 +144,8 @@
     imageScrollView.contentSize = CGSizeMake(_imageArray.count * scrollViewWidth, scrollViewHeight);
     imageScrollView.contentOffset = CGPointMake(index * scrollViewWidth, 0);
     imageScrollView.bounces = NO;
-    
+    imageScrollView.showsVerticalScrollIndicator = NO;
+//    imageScrollView.direction
     [self.delegate presentDetailedScrollImageView:imageScrollView];
     
 //    //Nav button
@@ -185,10 +186,6 @@
 #pragma mark -- Photo library
 -(void)directGoPhotoViewController{
     
-    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        return;
-    }
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
     {
         return;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ISUFImagePickerManager.h"
+#import "ISUFDetailedImageViewController.h"
 @interface ViewController : UIViewController<ISUFDetailedScrollImageViewdelegate>
 
 @end
