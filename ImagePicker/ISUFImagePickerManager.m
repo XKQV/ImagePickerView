@@ -78,6 +78,9 @@
     
 }
 -(void)updateCollectionViewHeight{
+    if (!_collectionView) {
+        return;
+    }
     CGRect frame = _collectionView.frame;
     if (_imageArray.count < 3) {
         frame.size.height = 120;
@@ -134,8 +137,11 @@
     for (int i = 0; i < self.imageArray.count; i++) {
         
         UIImageView *tempImageView = [[UIImageView alloc]initWithFrame:CGRectMake((scrollViewWidth*i),0 , scrollViewWidth, scrollViewHeight)];
-        tempImageView.image = _imageArray[i];
-        tempImageView.contentMode = UIViewContentModeScaleToFill;
+        UIImage *temImage = _imageArray[i];
+        temImage = [self imageWithImage:temImage convertToSize:CGSizeMake(scrollViewWidth, scrollViewHeight)];
+        tempImageView.image = temImage;
+//        tempImageView.contentMode = UIViewContentModeScaleToFill;
+//        [tempImageView setClipsToBounds:YES];
         [imageScrollView addSubview:tempImageView];
         
     }
@@ -145,15 +151,18 @@
     imageScrollView.contentOffset = CGPointMake(index * scrollViewWidth, 0);
     imageScrollView.bounces = NO;
     imageScrollView.showsVerticalScrollIndicator = NO;
-//    imageScrollView.direction
+
     [self.delegate presentDetailedScrollImageView:imageScrollView];
     
-//    //Nav button
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"" style: UIBarButtonItemStylePlain target:self action:@selector(dismissDetailedView)];
-//    self.navigationItem.leftBarButtonItem = backButton;
     
 }
-
+- (UIImage *)imageWithImage:(UIImage *)image convertToSize:(CGSize)size {
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return destImage;
+}
 #pragma mark -- Camera
 -(void)goCameraViewController{
     
