@@ -62,7 +62,11 @@
     
     if (indexPath.row == _imageArray.count) {
         [self showActionsheet];
+    }else {
+        [self detailedImageViewAtIndex:(int)indexPath.row];
     }
+    
+    
 }
 #pragma mark -- Actions
 -(void)pressedDeleteBtTag:(int)tag{
@@ -116,6 +120,42 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+-(void)detailedImageViewAtIndex:(int)index{
+    
+//
+//    float navBarheight = self.navigationController.navigationBar.frame.size.height;
+//
+//    float statusBarheight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    
+    UIScrollView *imageScrollView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    float scrollViewWidth = imageScrollView.bounds.size.width;
+    float scrollViewHeight = imageScrollView.bounds.size.height;
+    
+    for (int i = 0; i < self.imageArray.count; i++) {
+        
+        UIImageView *tempImageView = [[UIImageView alloc]initWithFrame:CGRectMake((scrollViewWidth*i),0 , scrollViewWidth, scrollViewHeight)];
+        tempImageView.image = _imageArray[i];
+        tempImageView.clipsToBounds = YES;
+        [imageScrollView addSubview:tempImageView];
+        
+    }
+    imageScrollView.pagingEnabled = YES;
+    imageScrollView.showsHorizontalScrollIndicator = NO;
+    imageScrollView.contentSize = CGSizeMake(_imageArray.count * scrollViewWidth, scrollViewHeight);
+    imageScrollView.contentOffset = CGPointMake(index * scrollViewWidth, 0);
+    imageScrollView.bounces = NO;
+    
+    [self.delegate presentDetailedScrollImageView:imageScrollView];
+    
+//    //Nav button
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"" style: UIBarButtonItemStylePlain target:self action:@selector(dismissDetailedView)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+    
+}
+
+-(void)dismissDetailedView{
+    
+}
 #pragma mark -- Camera
 -(void)goCameraViewController{
     

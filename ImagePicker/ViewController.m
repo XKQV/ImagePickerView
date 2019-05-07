@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "ISUFImagePickerManager.h"
+
 
 @interface ViewController ()
 @property (nonatomic, strong) ISUFImagePickerManager *manager;
@@ -29,7 +29,8 @@
 //    [self.view addSubview:_testView];
 //
 //
-        _manager = [[ISUFImagePickerManager alloc]init];
+    _manager = [[ISUFImagePickerManager alloc]init];
+    _manager.delegate = self;
     
     [self addChildViewController:_manager];
     [self.view addSubview:_manager.collectionView];
@@ -42,6 +43,9 @@
     
 }
 
+-(void)presentDetailedScrollImageView:(UIScrollView *)imageScrollView {
+    
+}
 
 -(void)currentImages{
     for (UIImage *image in _manager.imageArray) {
