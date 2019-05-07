@@ -154,9 +154,6 @@
     
 }
 
--(void)dismissDetailedView{
-    
-}
 #pragma mark -- Camera
 -(void)goCameraViewController{
     

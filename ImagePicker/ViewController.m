@@ -11,6 +11,7 @@
 
 @interface ViewController ()
 @property (nonatomic, strong) ISUFImagePickerManager *manager;
+@property (nonatomic, strong) UIScrollView *imageScrollView;
 @end
 
 @implementation ViewController
@@ -43,16 +44,27 @@
 }
 
 -(void)presentDetailedScrollImageView:(UIScrollView *)imageScrollView {
+    self.imageScrollView = imageScrollView;
     
-    [self.navigationController.view addSubview:imageScrollView];
+    [self.navigationController.view addSubview:_imageScrollView];
     ISUFDetailedImageViewController *imageScrollVC = [[ISUFDetailedImageViewController alloc]init];
     imageScrollVC.view.frame  = self.view.bounds;
-    [imageScrollVC.view addSubview:imageScrollView];
+    [imageScrollVC.view addSubview:_imageScrollView];
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideNavBar)];
-    [imageScrollView addGestureRecognizer:tapGesture];
+    [_imageScrollView addGestureRecognizer:tapGesture];
     
 //    self.navigationController.hidesBarsOnTap = YES;
     [self.navigationController pushViewController:imageScrollVC animated:YES];
+    
+   
+    CGPoint scrollViewOffset = _imageScrollView.contentOffset;
+    scrollViewOffset.y = 64;
+    [_imageScrollView setContentOffset:scrollViewOffset animated:YES];
+    CGSize svContentSize = _imageScrollView.contentSize;
+    svContentSize.height -= 64;
+    imageScrollView.contentSize = svContentSize;
+
 }
 
 
@@ -60,12 +72,11 @@
     if (!self.navigationController){
         return;
     }
+    
     if (self.navigationController.isNavigationBarHidden) {
-//            [UIApplication sharedApplication].statusBarHidden = NO;
+        //appear
         [self.navigationController setNavigationBarHidden:NO animated:YES];
-        
     }else {
-//        [UIApplication sharedApplication].statusBarHidden = YES;
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
 }
