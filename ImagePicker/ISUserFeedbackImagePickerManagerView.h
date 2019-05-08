@@ -8,22 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "ISUFCollectionViewCell.h"
+#import "ISUserFeedbackCollectionViewCell.h"
 #import <QBImagePickerController/QBImagePickerController.h>
 NS_ASSUME_NONNULL_BEGIN
 
 
 
-@interface ISUserFeedbackImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
+@interface ISUserFeedbackImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUserFeedbackCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
 
+//The selected images can be access by this array
 @property (nullable, nonatomic, strong) NSMutableArray *imageArray;
 
 
--(void)updateCollectionViewHeight;
+/*
+ Initiate a UIView with a title label and a collection view under the label.
+ Note: The input frame.origin parameter is based on source mainscreen's coordinate system
+*/
+- (instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font;
 
-- (instancetype)initWithFrame:(CGRect)collectionViewFrame CellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font;
 @end
 
 NS_ASSUME_NONNULL_END

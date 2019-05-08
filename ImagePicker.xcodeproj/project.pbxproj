@@ -11,7 +11,7 @@
 		BE74C86CCF65BC490DACEB29 /* libPods-ImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE838C6E4A10D82ABA68355E /* libPods-ImagePicker.a */; };
 		E58A3623D693E3F5E2CA13AF /* libPods-ImagePickerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F7A9A7C57512547A216B5 /* libPods-ImagePickerTests.a */; };
 		EA2BB61E227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */; };
-		EA2BB621227FBFF50006319E /* ISUFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2BB620227FBFF50006319E /* ISUFCollectionViewCell.m */; };
+		EA2BB621227FBFF50006319E /* ISUserFeedbackCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2BB620227FBFF50006319E /* ISUserFeedbackCollectionViewCell.m */; };
 		EA2BB624227FE0640006319E /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = EA2BB623227FE0630006319E /* 2.png */; };
 		EA4C18A822783ED700162249 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C18A722783ED700162249 /* AppDelegate.m */; };
 		EA4C18AB22783ED700162249 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C18AA22783ED700162249 /* ViewController.m */; };
@@ -52,8 +52,8 @@
 		CF6DA9A0AC1EB6355BA9B661 /* Pods-ImagePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagePicker.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImagePicker/Pods-ImagePicker.release.xcconfig"; sourceTree = "<group>"; };
 		EA2BB61C227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUserFeedbackImagePickerManagerView.h; sourceTree = "<group>"; };
 		EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISUserFeedbackImagePickerManagerView.m; sourceTree = "<group>"; };
-		EA2BB61F227FBFF50006319E /* ISUFCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUFCollectionViewCell.h; sourceTree = "<group>"; };
-		EA2BB620227FBFF50006319E /* ISUFCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISUFCollectionViewCell.m; sourceTree = "<group>"; };
+		EA2BB61F227FBFF50006319E /* ISUserFeedbackCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUserFeedbackCollectionViewCell.h; sourceTree = "<group>"; };
+		EA2BB620227FBFF50006319E /* ISUserFeedbackCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISUserFeedbackCollectionViewCell.m; sourceTree = "<group>"; };
 		EA2BB623227FE0630006319E /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		EA4C18A322783ED700162249 /* ImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4C18A622783ED700162249 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -169,8 +169,8 @@
 				EA4C18B522783ED800162249 /* main.m */,
 				EA2BB61C227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.h */,
 				EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */,
-				EA2BB61F227FBFF50006319E /* ISUFCollectionViewCell.h */,
-				EA2BB620227FBFF50006319E /* ISUFCollectionViewCell.m */,
+				EA2BB61F227FBFF50006319E /* ISUserFeedbackCollectionViewCell.h */,
+				EA2BB620227FBFF50006319E /* ISUserFeedbackCollectionViewCell.m */,
 			);
 			path = ImagePicker;
 			sourceTree = "<group>";
@@ -405,7 +405,7 @@
 			files = (
 				EA4C18AB22783ED700162249 /* ViewController.m in Sources */,
 				EA4C18B622783ED800162249 /* main.m in Sources */,
-				EA2BB621227FBFF50006319E /* ISUFCollectionViewCell.m in Sources */,
+				EA2BB621227FBFF50006319E /* ISUserFeedbackCollectionViewCell.m in Sources */,
 				EA4C18A822783ED700162249 /* AppDelegate.m in Sources */,
 				EA2BB61E227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m in Sources */,
 			);

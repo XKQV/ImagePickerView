@@ -11,22 +11,23 @@
 @interface ISUserFeedbackImagePickerManagerView()
 @property (nonatomic, assign) CGRect titleLabelFrame;
 @property (nonatomic, assign) CGRect collectionViewInitialFrame;
-
+@property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
 @implementation ISUserFeedbackImagePickerManagerView
 
 #pragma mark -- collection view
--(instancetype)initWithFrame:(CGRect)collectionViewFrame CellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font{
+-(instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font{
     self = [super init];
     if (self) {
+        
         CGRect viewFrame = labelFrame;
         viewFrame.size.height += collectionViewFrame.size.height;
         viewFrame.size.width = collectionViewFrame.size.width;
         float cellEdge = (collectionViewFrame.size.height - size.height) / 2;
         self = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:viewFrame];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.titleLabelFrame = labelFrame;
         self.collectionViewInitialFrame = collectionViewFrame;
         
@@ -45,13 +46,13 @@
         layout.minimumLineSpacing = 15;
         layout.minimumInteritemSpacing = 15;
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height) collectionViewLayout:layout];
-        _collectionView.backgroundColor = [UIColor grayColor];
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height) collectionViewLayout:layout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
         
         self.collectionView.delegate = self;
         _collectionView.dataSource = self;
         
-        [_collectionView registerClass:[ISUFCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [_collectionView registerClass:[ISUserFeedbackCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         _collectionView.scrollEnabled = false;
         [self addSubview:titlelabel];
         [self addSubview:_collectionView];
@@ -61,17 +62,17 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ISUFCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    ISUserFeedbackCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.delegate = self;
-    cell.deleteBtn.tag = indexPath.row;
+    cell.deleteButton.tag = indexPath.row;
     
     if (indexPath.row == _imageArray.count) {
         cell.topImage.image = [UIImage imageNamed:@"plus"];
-        [cell.deleteBtn removeFromSuperview];
+        [cell.deleteButton removeFromSuperview];
     }else{
         cell.topImage.image = _imageArray[indexPath.row];
-        [cell.contentView addSubview:cell.deleteBtn];
+        [cell.contentView addSubview:cell.deleteButton];
     }
     return cell;
 }
@@ -99,7 +100,7 @@
     
 }
 #pragma mark -- Actions
--(void)pressedDeleteBtTag:(int)tag{
+-(void)pressedDeleteButtonTag:(int)tag{
     
     NSLog(@"deleted cell %d",tag);
     [_imageArray removeObjectAtIndex:tag];

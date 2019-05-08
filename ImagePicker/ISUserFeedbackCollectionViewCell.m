@@ -6,9 +6,9 @@
 //  Copyright © 2019 董志玮. All rights reserved.
 //
 
-#import "ISUFCollectionViewCell.h"
+#import "ISUserFeedbackCollectionViewCell.h"
 
-@implementation ISUFCollectionViewCell
+@implementation ISUserFeedbackCollectionViewCell
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -29,19 +29,19 @@
         
         
         //delete button
-        _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-         _deleteBtn.frame = CGRectMake(80, 0, 20, 20);
-        _deleteBtn.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+         _deleteButton.frame = CGRectMake(80, 0, 20, 20);
+        _deleteButton.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
         
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_deleteBtn.bounds      byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight    cornerRadii:CGSizeMake(4, 4)];
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_deleteButton.bounds      byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight    cornerRadii:CGSizeMake(4, 4)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = _deleteBtn.bounds;
+        maskLayer.frame = _deleteButton.bounds;
         maskLayer.path = maskPath.CGPath;
-        _deleteBtn.layer.mask = maskLayer;
+        _deleteButton.layer.mask = maskLayer;
 
-        [_deleteBtn setImage:[UIImage imageNamed:@"cross"] forState:UIControlStateNormal];
-        [_deleteBtn addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
-        _deleteBtn.alpha = 0.5;
+        [_deleteButton setImage:[UIImage imageNamed:@"cross"] forState:UIControlStateNormal];
+        [_deleteButton addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
+        _deleteButton.alpha = 0.5;
         
     }
     
@@ -50,6 +50,6 @@
 
 - (void)didDeleteClick {
     
-    [self.delegate pressedDeleteBtTag:(int)self.deleteBtn.tag];
+    [self.delegate pressedDeleteButtonTag:(int)self.deleteButton.tag];
 }
 @end

@@ -9,20 +9,20 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol ISUFCellDelegate <NSObject>
+@protocol ISUserFeedbackCellDelegate <NSObject>
 
--(void)pressedDeleteBtTag:(int)tag;
+-(void)pressedDeleteButtonTag:(int)tag;
 
 @end
-@interface ISUFCollectionViewCell : UICollectionViewCell
+@interface ISUserFeedbackCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) UIImageView *topImage;
 
 @property (strong, nonatomic) UILabel *botlabel;
 
-@property (strong, nonatomic) UIButton *deleteBtn;
+@property (strong, nonatomic) UIButton *deleteButton;
 
-@property (weak, nonatomic) id<ISUFCellDelegate>delegate;
+@property (weak, nonatomic) id<ISUserFeedbackCellDelegate>delegate;
 
 @end
 
