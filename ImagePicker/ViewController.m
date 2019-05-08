@@ -12,6 +12,7 @@
 @interface ViewController ()
 @property (nonatomic, strong) ISUFImagePickerManager *manager;
 @property (nonatomic, strong) UIScrollView *imageScrollView;
+@property (nonatomic, strong) ISUFDetailedImageViewController *imageScrollVC;
 @end
 
 @implementation ViewController
@@ -40,10 +41,7 @@
     [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
     imageBt.backgroundColor = [UIColor greenColor];
     //    [self.view addSubview:imageBt];
-    
-    
-    
-    
+
 }
 
 -(void)showActionsheet{
@@ -54,23 +52,55 @@
         pop.sourceView = self.view;
         pop.sourceRect = self.view.bounds;
     }
-    [alertController addAction:[UIAlertAction actionWithTitle:@"保存到手机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //        [self goCameraViewController];
-        NSLog(@"saveToPhone");
-    }]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self deleteImage];
         NSLog(@"deleteImage");
     }]];
-    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"保存到手机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //        [self goCameraViewController];
+        NSLog(@"saveToPhone");
+    }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)deleteImage{
+    if ( !_manager.imageArray || _manager.imageArray.count == 0 ) {
+        return;
+    }
+    
     int index = _imageScrollView.contentOffset.x / _imageScrollView.frame.size.width;
     NSLog(@"index is at %d", index);
+    
+    
+    
+    [_manager.imageArray removeObjectAtIndex:index];
+
+    [self.navigationController popViewControllerAnimated:NO];
+    
+    [_manager detailedImageViewAtIndex:index];
+
+//    int count = (int)_manager.imageArray.count;
+//    if (count > 0) {
+//        //more than 1 images to be deleted
+//        _imageScrollView setContentOffset:cgpoint
+//        if (index < count - 1) {
+//            //deleted image is not the last one
+//        }else (index = count -1) {
+//            //deleted the last image, dismiss the viewcontroller
+//        }
+//
+//    }else {
+//        //delete the last image
+//
+//    }
+    
+    [_imageScrollView reloadInputViews];
+    
+    [_manager.collectionView reloadData];
+    
+    [_manager updateCollectionViewHeight];
+    
     
 }
 
@@ -78,11 +108,11 @@
     self.imageScrollView = imageScrollView;
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
-    ISUFDetailedImageViewController *imageScrollVC = [[ISUFDetailedImageViewController alloc]init];
-    imageScrollVC.navigationController = self.navigationController;
+    _imageScrollVC = [[ISUFDetailedImageViewController alloc]init];
+    _imageScrollVC.navigationController = self.navigationController;
     
-    imageScrollVC.view.frame  = self.view.bounds;
-    [imageScrollVC.view addSubview:_imageScrollView];
+    _imageScrollVC.view.frame  = self.view.bounds;
+    [_imageScrollVC.view addSubview:_imageScrollView];
     
     
     
@@ -101,13 +131,13 @@
     imageScrollView.contentSize = svContentSize;
     
     //right button
-    imageScrollVC.navigationController.navigationBar.topItem.title = @"hi";
+    _imageScrollVC.navigationController.navigationBar.topItem.title = @"hi";
     UIBarButtonItem *choiceBt = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionsheet)];
     
-    imageScrollVC.navigationItem.rightBarButtonItem = choiceBt;
-    imageScrollVC.navigationItem.title = @"1";
+    _imageScrollVC.navigationItem.rightBarButtonItem = choiceBt;
+    _imageScrollVC.navigationItem.title = @"Detailed VC";
 //    imageScrollVC.navigationController.navigationItem.rightBarButtonItem = choiceBt;
-    [self.navigationController pushViewController:imageScrollVC animated:YES];
+    [self.navigationController pushViewController:_imageScrollVC animated:YES];
 //
 //    self.navigationController.topViewController.navigationItem.rightBarButtonItem = choiceBt;
     

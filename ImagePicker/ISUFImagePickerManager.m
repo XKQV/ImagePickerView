@@ -124,7 +124,9 @@
 }
 
 -(void)detailedImageViewAtIndex:(int)index{
-    
+    if (!_imageArray || _imageArray.count == 0) {
+        return;
+    }
 //
 //    float navBarheight = self.navigationController.navigationBar.frame.size.height;
 //

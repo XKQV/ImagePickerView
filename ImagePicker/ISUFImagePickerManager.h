@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) id<ISUFDetailedScrollImageViewdelegate>delegate;
 
+-(void)updateCollectionViewHeight;
+-(void)detailedImageViewAtIndex:(int)index;
 @end
 
 NS_ASSUME_NONNULL_END
