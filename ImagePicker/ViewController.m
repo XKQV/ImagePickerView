@@ -10,7 +10,7 @@
 
 
 @interface ViewController ()
-@property (nonatomic, strong) ISUFImagePickerManager *manager;
+@property (nonatomic, strong) ISUserFeedbackImagePickerManagerView *manager;
 @property (nonatomic, strong) UIScrollView *imageScrollView;
 @property (nonatomic, strong) ISUFDetailedImageViewController *imageScrollVC;
 @end
@@ -31,11 +31,13 @@
     //    [self.view addSubview:_testView];
     //
     //
-    _manager = [[ISUFImagePickerManager alloc]init];
-    _manager.delegate = self;
+    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 120) andCellSize:CGSizeMake(100, 100)];
     
-    [self addChildViewController:_manager];
-    [self.view addSubview:_manager.collectionView];
+
+//    self.manager.delegate = self;
+    
+    
+    [self.view addSubview:_manager];
     
     UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 300, 100, 100)];
     [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
@@ -78,7 +80,7 @@
 
     [self.navigationController popViewControllerAnimated:NO];
     
-    [_manager detailedImageViewAtIndex:index];
+//    [_manager detailedImageViewAtIndex:index];
 
 //    int count = (int)_manager.imageArray.count;
 //    if (count > 0) {
@@ -119,6 +121,7 @@
     //tap gesture to hide unhide navbar 
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideNavBar)];
     [_imageScrollView addGestureRecognizer:tapGesture];
+    tapGesture.cancelsTouchesInView = false;
     //view bounces when using the below code
     //    self.navigationController.hidesBarsOnTap = YES;
     
