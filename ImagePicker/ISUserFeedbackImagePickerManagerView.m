@@ -12,13 +12,15 @@
 @property (nonatomic, assign) CGRect titleLabelFrame;
 @property (nonatomic, assign) CGRect collectionViewInitialFrame;
 @property (nonatomic, strong) UICollectionView *collectionView;
-
+@property (nonatomic, assign) int maxImages;
+@property (nonatomic, assign) float cellItemWidth;
+@property (nonatomic, assign) float cellEdge;
 @end
 
 @implementation ISUserFeedbackImagePickerManagerView
 
 #pragma mark -- collection view
-- (instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font {
+- (instancetype)initWithFrame:(CGRect)collectionViewFrame cellEdge:(float)edge labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font maxNumberOfImages:(int)maxNumberOfImages {
     self = [super init];
     if (self) {
         //Setup main view parameters
@@ -31,49 +33,55 @@
         self.backgroundColor = [UIColor whiteColor];
         self.collectionViewInitialFrame = collectionViewFrame;
         self.imageArray = [[NSMutableArray alloc]init];
+        self.maxImages = maxNumberOfImages;
+        self.cellEdge = edge;
         
         //Label
-        float cellEdge = (collectionViewFrame.size.height - size.height) / 2;
         self.titleLabelFrame = labelFrame;
-        UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(cellEdge, 0, labelFrame.size.width, labelFrame.size.height)];
+        UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(self.cellEdge, 0, labelFrame.size.width, labelFrame.size.height)];
         titlelabel.text = title;
         titlelabel.font = font;
         
         //Collection view Layout
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = size;
-        layout.sectionInset = UIEdgeInsetsMake(cellEdge, cellEdge, cellEdge, cellEdge);
+        self.cellItemWidth = (collectionViewFrame.size.width - edge * 2 - 40) / 3;
+        layout.itemSize = CGSizeMake(self.cellItemWidth, self.cellItemWidth);
+        layout.sectionInset = UIEdgeInsetsMake(self.cellEdge, self.cellEdge, self.cellEdge, self.cellEdge);
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.minimumLineSpacing = 15;
         layout.minimumInteritemSpacing = 15;
         
         //Collection view
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height) collectionViewLayout:layout];
-        _collectionView.backgroundColor = [UIColor whiteColor];
-        [_collectionView registerClass:[ISUserFeedbackCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        _collectionView.scrollEnabled = false;
+        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height + self.cellEdge) collectionViewLayout:layout];
+        self.collectionView.backgroundColor = [UIColor whiteColor];
+        [self.collectionView registerClass:[ISUserFeedbackCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        self.collectionView.scrollEnabled = false;
         self.collectionView.delegate = self;
-        _collectionView.dataSource = self;
-
+        self.collectionView.dataSource = self;
+        
         [self addSubview:titlelabel];
-        [self addSubview:_collectionView];
+        [self addSubview:self.collectionView];
     }
     
     return self;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ISUserFeedbackCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    if (!self.imageArray) {
+        return cell;
+    }
     
     cell.delegate = self;
     cell.deleteButton.tag = indexPath.row;
     
-    if (indexPath.row == _imageArray.count) {
-        cell.topImage.image = [UIImage imageNamed:@"plus"];
-        [cell.deleteButton removeFromSuperview];
-    }else{
-        cell.topImage.image = _imageArray[indexPath.row];
+    if (indexPath.row < self.imageArray.count) {
+        cell.topImageView.image = self.imageArray[indexPath.row];
         [cell.contentView addSubview:cell.deleteButton];
+    }else{
+        cell.topImageView.image = [UIImage imageNamed:@"plus"];
+        [cell.deleteButton removeFromSuperview];
     }
     return cell;
 }
@@ -86,16 +94,16 @@
     if (!self.imageArray) {
         return 0;
     }
-    if (self.imageArray.count < 9) {
+    if (self.imageArray.count < self.maxImages) {
         return self.imageArray.count + 1;
     } else {
-        return  self.imageArray.count;
+        return self.imageArray.count;
     }
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == _imageArray.count) {
+    if (indexPath.row == self.imageArray.count) {
         [self showActionsheet];
     }
     
@@ -103,8 +111,7 @@
 #pragma mark -- Actions
 - (void)pressedDeleteButtonTag:(int)tag {
     
-    NSLog(@"deleted cell %d",tag);
-    [_imageArray removeObjectAtIndex:tag];
+    [self.imageArray removeObjectAtIndex:tag];
     [self updateCollectionViewHeight];
     [self.collectionView reloadData];
     
@@ -116,26 +123,29 @@
     CGRect mainviewFrame = self.frame;
     CGRect collectionViewframe = self.collectionView.frame;
     if (_imageArray.count < 3) {
-        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height;
+        collectionViewframe.size.height = self.cellEdge * 2 + self.cellItemWidth;
         self.collectionView.frame = collectionViewframe;
         
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
         
     }else if(_imageArray.count < 6){
-        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height * 2;
+        collectionViewframe.size.height = self.cellEdge * 3 + self.cellItemWidth * 2;
         self.collectionView.frame = collectionViewframe;
         
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
-        //        [self setNeedsDisplay];
-    }else if (_imageArray.count <= 9){
-        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height * 3;
+        
+    }else if (_imageArray.count <= self.maxImages){
+        collectionViewframe.size.height = self.cellEdge * 4 + self.cellItemWidth * 3;
         self.collectionView.frame = collectionViewframe;
         
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
     }
+    
+}
+-(void)layoutSubviews{
     
 }
 
@@ -147,17 +157,17 @@
         pop.sourceView = self.collectionView;
         pop.sourceRect = self.collectionView.bounds;
     }
-    [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cardbase2.3_48", @"拍照") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self goCameraViewController];
         
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self directGoPhotoViewController];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cardbase2.3_49", @"从相册选择") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self directToPhotoViewController];
         
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"取消") style:UIAlertActionStyleCancel handler:nil]];
     
     [self showViewControllerOnTheCurrentView:alertController];
 }
@@ -195,7 +205,7 @@
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
     
-    [self dismissViewControllerOnTheCurrentView];
+    [self showViewControllerOnTheCurrentView:alert];
 }
 
 #pragma mark -- Camera
@@ -205,34 +215,26 @@
     {
         return;
     }
-    //创建ImagePickController
+    //ImagePickController
     UIImagePickerController *cameraImagePicker = [[UIImagePickerController alloc]init];
-    
-    //创建源类型
     UIImagePickerControllerSourceType mySourceType = UIImagePickerControllerSourceTypeCamera ;
     
     cameraImagePicker.sourceType = mySourceType;
-    
-    //设置代理
     cameraImagePicker.delegate = self;
-    //设置可编辑
     //    myPicker.allowsEditing = YES;
-    
-    //通过模态的方式推出系统相册
     [self showViewControllerOnTheCurrentView:cameraImagePicker];
     
 }
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [_imageArray addObject:selectImage];
+    [self.imageArray addObject:selectImage];
     [self updateCollectionViewHeight];
     [self.collectionView reloadData];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -- Photo library
--(void)directGoPhotoViewController{
+- (void)directToPhotoViewController {
     
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
     {
@@ -247,7 +249,7 @@
     
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = YES;
-    imagePickerController.maximumNumberOfSelection = 9;
+    imagePickerController.maximumNumberOfSelection = self.maxImages;
     imagePickerController.showsNumberOfSelectedAssets = YES;
     
     [self showViewControllerOnTheCurrentView:imagePickerController];
@@ -255,7 +257,7 @@
 }
 
 #pragma mark -- 实现imagePicker的代理方法
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
     for (PHAsset *asset in assets) {
         // Do something with the asset
         __weak typeof (self) weakSelf = self;
@@ -265,14 +267,13 @@
             if (imageURL) {
                 NSData *data = [NSData dataWithContentsOfURL:imageURL];
                 UIImage *img = [[UIImage alloc] initWithData:data];
-                if (weakSelf.imageArray.count < 9) {
+                if (weakSelf.imageArray.count < self.maxImages) {
                     [weakSelf.imageArray addObject:img];
                     [self updateCollectionViewHeight];
                     [weakSelf.collectionView reloadData];
                 }else {
                     [self performSelectorOnMainThread:@selector(okAlertControllerWithMessage:) withObject:@"Please select no more than 9 images" waitUntilDone:YES];
                 }
-                
             }else {
                 [self performSelectorOnMainThread:@selector(okAlertControllerWithMessage:) withObject:@"Please only select images" waitUntilDone:YES];
             }
@@ -283,9 +284,7 @@
     [self dismissViewControllerOnTheCurrentView];
 }
 
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController{
-    
-    //    self
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
     
     [self dismissViewControllerOnTheCurrentView];
 }

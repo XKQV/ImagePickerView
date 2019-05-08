@@ -12,34 +12,41 @@
 @interface ViewController ()
 @property (nonatomic, strong) ISUserFeedbackImagePickerManagerView *manager;
 @property (nonatomic, strong) UIScrollView *imageScrollView;
+@property (nonatomic, strong) UIButton *imageBt2;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 100, 100, 100)];
+    [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
+    imageBt.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:imageBt];
+    
+    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame) + 20, [UIScreen mainScreen].bounds.size.width, 120) cellEdge:10.0 labelTitle:@"图片问题（选填）" labelFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame), 200, 20) labelFont:[UIFont systemFontOfSize:16] maxNumberOfImages:9];
 
-    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 120) cellSize:CGSizeMake(100, 100)  labelTitle:@"图片问题（选填）" labelFrame:CGRectMake(0, 80, 200, 20) labelFont:[UIFont systemFontOfSize:16]];
-    
-    //    self.manager.delegate = self;
-    
-    
     [self.view addSubview:_manager];
-    
-//        UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 300, 100, 100)];
-//        [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
-//        imageBt.backgroundColor = [UIColor greenColor];
-//        [self.view addSubview:imageBt];
+    self.imageBt2 = [[UIButton alloc]initWithFrame:CGRectMake(200, CGRectGetMaxY(_manager.frame), 100, 100)];
+    [self.imageBt2 addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
+    self.imageBt2.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:self.imageBt2];
+
+   
     
 }
 
+-(void)viewDidLayoutSubviews {
+    self.imageBt2.frame = CGRectMake(200, CGRectGetMaxY(_manager.frame), 100, 100);
 
-//
-//-(void)currentImages{
-//    for (UIImage *image in _manager.imageArray) {
-//        NSLog(@"images");
-//    }
-//
-//}
+}
+
+-(void)currentImages{
+    for (UIImage *image in _manager.imageArray) {
+        NSLog(@"images");
+    }
+
+}
 
 @end

@@ -15,33 +15,28 @@
     if (self)
     {
         //imageview
-        _topImage  = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        _topImage.clipsToBounds = YES;
-        _topImage.contentMode = UIViewContentModeScaleAspectFill;
-        [self.contentView addSubview:_topImage];
-        
-        //label not used 
-        _botlabel = [[UILabel alloc]initWithFrame:CGRectMake(40, 80, 50,20)];
-//        [self.contentView addSubview:_botlabel];
-        
-        self.layer.cornerRadius = 4.0;
-        [self.layer setMasksToBounds:YES];
-        
+        CGRect imageViewFrame = self.frame;
+        imageViewFrame.origin = CGPointMake(0, 0);
+        self.topImageView  = [[UIImageView alloc] initWithFrame:imageViewFrame];
+        self.topImageView.clipsToBounds = YES;
+        self.topImageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.contentView addSubview:self.topImageView];
         
         //delete button
-        _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-         _deleteButton.frame = CGRectMake(80, 0, 20, 20);
-        _deleteButton.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        float deleteButtonWidth = self.frame.size.width * 0.22;
+        self.deleteButton.frame = CGRectMake(self.frame.size.width - deleteButtonWidth, 0, deleteButtonWidth, deleteButtonWidth);
+        self.deleteButton.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
         
-        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_deleteButton.bounds      byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight    cornerRadii:CGSizeMake(4, 4)];
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.deleteButton.bounds      byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopRight    cornerRadii:CGSizeMake(4, 4)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = _deleteButton.bounds;
+        maskLayer.frame = self.deleteButton.bounds;
         maskLayer.path = maskPath.CGPath;
-        _deleteButton.layer.mask = maskLayer;
-
-        [_deleteButton setImage:[UIImage imageNamed:@"cross"] forState:UIControlStateNormal];
-        [_deleteButton addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
-        _deleteButton.alpha = 0.5;
+        self.deleteButton.layer.mask = maskLayer;
+        
+        [self.deleteButton setImage:[UIImage imageNamed:@"cross"] forState:UIControlStateNormal];
+        [self.deleteButton addTarget:self action:@selector(didDeleteClick) forControlEvents:UIControlEventTouchUpInside];
+        self.deleteButton.alpha = 0.5;
         
     }
     

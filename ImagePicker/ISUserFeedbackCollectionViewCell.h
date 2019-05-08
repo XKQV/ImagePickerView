@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @interface ISUserFeedbackCollectionViewCell : UICollectionViewCell
 
-@property (strong, nonatomic) UIImageView *topImage;
+@property (strong, nonatomic) UIImageView *topImageView;
 
 @property (strong, nonatomic) UILabel *botlabel;
 
