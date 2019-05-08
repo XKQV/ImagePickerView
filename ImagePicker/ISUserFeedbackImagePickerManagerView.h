@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  Initiate a UIView with a title label and a collection view under the label.
  Note: The input frame.origin parameter is based on source mainscreen's coordinate system
+        The height of the collection view should start with a height that fits for just one row of collection view cell
 */
 - (instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font;
 

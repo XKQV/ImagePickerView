@@ -18,42 +18,43 @@
 @implementation ISUserFeedbackImagePickerManagerView
 
 #pragma mark -- collection view
--(instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font{
+- (instancetype)initWithFrame:(CGRect)collectionViewFrame cellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font {
     self = [super init];
     if (self) {
-        
+        //Setup main view parameters
         CGRect viewFrame = labelFrame;
         viewFrame.size.height += collectionViewFrame.size.height;
         viewFrame.size.width = collectionViewFrame.size.width;
-        float cellEdge = (collectionViewFrame.size.height - size.height) / 2;
+        
+        //Main View that contains a label and a collection view
         self = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:viewFrame];
         self.backgroundColor = [UIColor whiteColor];
-        self.titleLabelFrame = labelFrame;
         self.collectionViewInitialFrame = collectionViewFrame;
+        self.imageArray = [[NSMutableArray alloc]init];
         
         //Label
+        float cellEdge = (collectionViewFrame.size.height - size.height) / 2;
+        self.titleLabelFrame = labelFrame;
         UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(cellEdge, 0, labelFrame.size.width, labelFrame.size.height)];
         titlelabel.text = title;
         titlelabel.font = font;
-        //Collection view
+        
+        //Collection view Layout
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        
-        self.imageArray = [[NSMutableArray alloc]init];
         layout.itemSize = size;
-        
         layout.sectionInset = UIEdgeInsetsMake(cellEdge, cellEdge, cellEdge, cellEdge);
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.minimumLineSpacing = 15;
         layout.minimumInteritemSpacing = 15;
         
+        //Collection view
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height) collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
-        
-        self.collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        
         [_collectionView registerClass:[ISUserFeedbackCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         _collectionView.scrollEnabled = false;
+        self.collectionView.delegate = self;
+        _collectionView.dataSource = self;
+
         [self addSubview:titlelabel];
         [self addSubview:_collectionView];
     }
@@ -61,7 +62,7 @@
     return self;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ISUserFeedbackCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.delegate = self;
@@ -77,11 +78,11 @@
     return cell;
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (!self.imageArray) {
         return 0;
     }
@@ -92,7 +93,7 @@
     }
     
 }
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == _imageArray.count) {
         [self showActionsheet];
@@ -100,7 +101,7 @@
     
 }
 #pragma mark -- Actions
--(void)pressedDeleteButtonTag:(int)tag{
+- (void)pressedDeleteButtonTag:(int)tag {
     
     NSLog(@"deleted cell %d",tag);
     [_imageArray removeObjectAtIndex:tag];
@@ -108,7 +109,7 @@
     [self.collectionView reloadData];
     
 }
--(void)updateCollectionViewHeight{
+- (void)updateCollectionViewHeight {
     if (!self.collectionView) {
         return;
     }
@@ -137,10 +138,8 @@
     }
     
 }
--(void)drawRect:(CGRect)rect{
-    
-}
--(void)showActionsheet{
+
+- (void)showActionsheet {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         UIPopoverPresentationController *pop = [alertController popoverPresentationController];
@@ -163,7 +162,7 @@
     [self showViewControllerOnTheCurrentView:alertController];
 }
 
-- (void)showViewControllerOnTheCurrentView:(UIViewController *)viewController{
+- (void)showViewControllerOnTheCurrentView:(UIViewController *)viewController {
     
     id rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     if([rootViewController isKindOfClass:[UINavigationController class]])
@@ -177,7 +176,7 @@
     [rootViewController presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)dismissViewControllerOnTheCurrentView{
+- (void)dismissViewControllerOnTheCurrentView {
     
     id rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     if([rootViewController isKindOfClass:[UINavigationController class]])
@@ -191,7 +190,7 @@
     [rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)okAlertControllerWithMessage:(NSString*)message{
+- (void)okAlertControllerWithMessage:(NSString*)message {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Information" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
@@ -200,7 +199,7 @@
 }
 
 #pragma mark -- Camera
--(void)goCameraViewController{
+- (void)goCameraViewController {
     
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
