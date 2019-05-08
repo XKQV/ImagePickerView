@@ -8,25 +8,44 @@
 
 #import "ISUserFeedbackImagePickerManagerView.h"
 
+@interface ISUserFeedbackImagePickerManagerView()
+@property (nonatomic, assign) CGRect titleLabelFrame;
+@property (nonatomic, assign) CGRect collectionViewInitialFrame;
+
+
+@end
 
 @implementation ISUserFeedbackImagePickerManagerView
 
 #pragma mark -- collection view
-- (instancetype)initWithFrame:(CGRect)frame andCellSize:(CGSize)size{
+-(instancetype)initWithFrame:(CGRect)collectionViewFrame CellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font{
     self = [super init];
     if (self) {
-        self = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:frame];
+        CGRect viewFrame = labelFrame;
+        viewFrame.size.height += collectionViewFrame.size.height;
+        viewFrame.size.width = collectionViewFrame.size.width;
+        float cellEdge = (collectionViewFrame.size.height - size.height) / 2;
+        self = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:viewFrame];
         self.backgroundColor = [UIColor redColor];
+        self.titleLabelFrame = labelFrame;
+        self.collectionViewInitialFrame = collectionViewFrame;
+        
+        //Label
+        UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(cellEdge, 0, labelFrame.size.width, labelFrame.size.height)];
+        titlelabel.text = title;
+        titlelabel.font = font;
+        //Collection view
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         
         self.imageArray = [[NSMutableArray alloc]init];
         layout.itemSize = size;
-        layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        layout.minimumLineSpacing = 20;
-        layout.minimumInteritemSpacing = 20;
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout:layout];
+        layout.sectionInset = UIEdgeInsetsMake(cellEdge, cellEdge, cellEdge, cellEdge);
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        layout.minimumLineSpacing = 15;
+        layout.minimumInteritemSpacing = 15;
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, labelFrame.size.height, collectionViewFrame.size.width, collectionViewFrame.size.height) collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor grayColor];
         
         self.collectionView.delegate = self;
@@ -34,6 +53,7 @@
         
         [_collectionView registerClass:[ISUFCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         _collectionView.scrollEnabled = false;
+        [self addSubview:titlelabel];
         [self addSubview:_collectionView];
     }
     
@@ -61,16 +81,21 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.imageArray.count + 1;
+    if (!self.imageArray) {
+        return 0;
+    }
+    if (self.imageArray.count < 9) {
+        return self.imageArray.count + 1;
+    } else {
+        return  self.imageArray.count;
+    }
+    
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == _imageArray.count) {
         [self showActionsheet];
-    }else {
-//        [self detailedImageViewAtIndex:(int)indexPath.row];
     }
-    
     
 }
 #pragma mark -- Actions
@@ -86,17 +111,32 @@
     if (!self.collectionView) {
         return;
     }
-    CGRect frame = self.collectionView.frame;
+    CGRect mainviewFrame = self.frame;
+    CGRect collectionViewframe = self.collectionView.frame;
     if (_imageArray.count < 3) {
-        frame.size.height = 120;
-        self.collectionView.frame = frame;
+        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height;
+        self.collectionView.frame = collectionViewframe;
+        
+        mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
+        self.frame = mainviewFrame;
+        
     }else if(_imageArray.count < 6){
-        frame.size.height = 240;
-        self.collectionView.frame = frame;
+        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height * 2;
+        self.collectionView.frame = collectionViewframe;
+        
+        mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
+        self.frame = mainviewFrame;
+        //        [self setNeedsDisplay];
     }else if (_imageArray.count <= 9){
-        frame.size.height = 360;
-        self.collectionView.frame = frame;
+        collectionViewframe.size.height = self.collectionViewInitialFrame.size.height * 3;
+        self.collectionView.frame = collectionViewframe;
+        
+        mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
+        self.frame = mainviewFrame;
     }
+    
+}
+-(void)drawRect:(CGRect)rect{
     
 }
 -(void)showActionsheet{
@@ -109,17 +149,21 @@
     }
     [alertController addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self goCameraViewController];
-        NSLog(@"goCameraViewController");
+        
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self directGoPhotoViewController];
-        NSLog(@"directGoPhotoViewController");
+        
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     
-    //show alert
+    [self showViewControllerOnTheCurrentView:alertController];
+}
+
+- (void)showViewControllerOnTheCurrentView:(UIViewController *)viewController{
+    
     id rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     if([rootViewController isKindOfClass:[UINavigationController class]])
     {
@@ -129,8 +173,21 @@
     {
         rootViewController = ((UITabBarController *)rootViewController).selectedViewController;
     }
-    [rootViewController presentViewController:alertController animated:YES completion:nil];
+    [rootViewController presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)dismissViewControllerOnTheCurrentView{
     
+    id rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    if([rootViewController isKindOfClass:[UINavigationController class]])
+    {
+        rootViewController = ((UINavigationController *)rootViewController).viewControllers.firstObject;
+    }
+    if([rootViewController isKindOfClass:[UITabBarController class]])
+    {
+        rootViewController = ((UITabBarController *)rootViewController).selectedViewController;
+    }
+    [rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)okAlertControllerWithMessage:(NSString*)message{
@@ -138,51 +195,9 @@
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
     
-    //    [self presentViewController:alert animated:YES completion:nil];
+    [self dismissViewControllerOnTheCurrentView];
 }
 
-//-(void)detailedImageViewAtIndex:(int)index{
-//    if (!_imageArray || _imageArray.count == 0) {
-//        return;
-//    }
-//    //
-//    //    float navBarheight = self.navigationController.navigationBar.frame.size.height;
-//    //
-//    //    float statusBarheight = [UIApplication sharedApplication].statusBarFrame.size.height;
-//
-//    UIScrollView *imageScrollView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-//    float scrollViewWidth = imageScrollView.bounds.size.width;
-//    float scrollViewHeight = imageScrollView.bounds.size.height;
-//
-//    for (int i = 0; i < self.imageArray.count; i++) {
-//
-//        UIImageView *tempImageView = [[UIImageView alloc]initWithFrame:CGRectMake((scrollViewWidth*i),0 , scrollViewWidth, scrollViewHeight)];
-//        UIImage *temImage = _imageArray[i];
-//        temImage = [self imageWithImage:temImage convertToSize:CGSizeMake(scrollViewWidth, scrollViewHeight)];
-//        tempImageView.image = temImage;
-//        //        tempImageView.contentMode = UIViewContentModeScaleToFill;
-//        //        [tempImageView setClipsToBounds:YES];
-//        [imageScrollView addSubview:tempImageView];
-//
-//    }
-//    imageScrollView.pagingEnabled = YES;
-//    imageScrollView.showsHorizontalScrollIndicator = NO;
-//    imageScrollView.contentSize = CGSizeMake(_imageArray.count * scrollViewWidth, scrollViewHeight);
-//    imageScrollView.contentOffset = CGPointMake(index * scrollViewWidth, 0);
-//    imageScrollView.bounces = NO;
-//    imageScrollView.showsVerticalScrollIndicator = NO;
-//
-//    [self.delegate presentDetailedScrollImageView:imageScrollView];
-//
-//
-//}
-- (UIImage *)imageWithImage:(UIImage *)image convertToSize:(CGSize)size {
-    UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return destImage;
-}
 #pragma mark -- Camera
 -(void)goCameraViewController{
     
@@ -191,23 +206,30 @@
         return;
     }
     //创建ImagePickController
-    UIImagePickerController *myPicker = [[UIImagePickerController alloc]init];
+    UIImagePickerController *cameraImagePicker = [[UIImagePickerController alloc]init];
     
     //创建源类型
     UIImagePickerControllerSourceType mySourceType = UIImagePickerControllerSourceTypeCamera ;
     
-    myPicker.sourceType = mySourceType;
+    cameraImagePicker.sourceType = mySourceType;
     
     //设置代理
-    myPicker.delegate = self;
+    cameraImagePicker.delegate = self;
     //设置可编辑
     //    myPicker.allowsEditing = YES;
     
     //通过模态的方式推出系统相册
-    //    [self presentViewController:myPicker animated:YES completion:nil];
+    [self showViewControllerOnTheCurrentView:cameraImagePicker];
     
 }
-
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [_imageArray addObject:selectImage];
+    [self updateCollectionViewHeight];
+    [self.collectionView reloadData];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark -- Photo library
 -(void)directGoPhotoViewController{
@@ -221,40 +243,17 @@
         return;
     }
     
-    //    //创建ImagePickController
-    //    UIImagePickerController *myPicker = [[UIImagePickerController alloc]init];
-    //
-    //    //创建源类型
-    //    UIImagePickerControllerSourceType mySourceType = UIImagePickerControllerSourceTypePhotoLibrary ;
-    //
-    //    myPicker.sourceType = mySourceType;
-    //
-    //    //设置代理
-    //    myPicker.delegate = self;
-    //    //设置可编辑
-    //    //    myPicker.allowsEditing = YES;
-    //
-    //    //通过模态的方式推出系统相册
-    //    [self presentViewController:myPicker animated:YES completion:^{
-    //        NSLog(@"进入相册");
-    //    }];
-    
     QBImagePickerController *imagePickerController = [QBImagePickerController new];
+    
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.maximumNumberOfSelection = 9;
     imagePickerController.showsNumberOfSelectedAssets = YES;
     
-    //    [self presentViewController:imagePickerController animated:YES completion:NULL];
+    [self showViewControllerOnTheCurrentView:imagePickerController];
+    
 }
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [_imageArray addObject:selectImage];
-    [self updateCollectionViewHeight];
-    [self.collectionView reloadData];
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
+
 #pragma mark -- 实现imagePicker的代理方法
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
     for (PHAsset *asset in assets) {
@@ -281,11 +280,14 @@
         }];
     }
     
-    //    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerOnTheCurrentView];
 }
 
 -(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController{
-    //    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    //    self
+    
+    [self dismissViewControllerOnTheCurrentView];
 }
 
 

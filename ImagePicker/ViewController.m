@@ -12,7 +12,6 @@
 @interface ViewController ()
 @property (nonatomic, strong) ISUserFeedbackImagePickerManagerView *manager;
 @property (nonatomic, strong) UIScrollView *imageScrollView;
-@property (nonatomic, strong) ISUFDetailedImageViewController *imageScrollVC;
 @end
 
 @implementation ViewController
@@ -31,19 +30,19 @@
     //    [self.view addSubview:_testView];
     //
     //
-    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 120) andCellSize:CGSizeMake(100, 100)];
+    //    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 120) andCellSize:CGSizeMake(100, 100)  ];
+    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 120) CellSize:CGSizeMake(100, 100)  labelTitle:@"图片问题（选填）" labelFrame:CGRectMake(0, 80, 200, 20) labelFont:[UIFont systemFontOfSize:16]];
     
-
-//    self.manager.delegate = self;
+    //    self.manager.delegate = self;
     
     
     [self.view addSubview:_manager];
     
-    UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 300, 100, 100)];
-    [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
-    imageBt.backgroundColor = [UIColor greenColor];
+    //    UIButton *imageBt = [[UIButton alloc]initWithFrame:CGRectMake(200, 300, 100, 100)];
+    //    [imageBt addTarget:self action:@selector(currentImages) forControlEvents:UIControlEventTouchUpInside];
+    //    imageBt.backgroundColor = [UIColor greenColor];
     //    [self.view addSubview:imageBt];
-
+    
 }
 
 -(void)showActionsheet{
@@ -77,25 +76,8 @@
     
     
     [_manager.imageArray removeObjectAtIndex:index];
-
-    [self.navigationController popViewControllerAnimated:NO];
     
-//    [_manager detailedImageViewAtIndex:index];
-
-//    int count = (int)_manager.imageArray.count;
-//    if (count > 0) {
-//        //more than 1 images to be deleted
-//        _imageScrollView setContentOffset:cgpoint
-//        if (index < count - 1) {
-//            //deleted image is not the last one
-//        }else (index = count -1) {
-//            //deleted the last image, dismiss the viewcontroller
-//        }
-//
-//    }else {
-//        //delete the last image
-//
-//    }
+    [self.navigationController popViewControllerAnimated:NO];
     
     [_imageScrollView reloadInputViews];
     
@@ -106,45 +88,7 @@
     
 }
 
--(void)presentDetailedScrollImageView:(UIScrollView *)imageScrollView {
-    self.imageScrollView = imageScrollView;
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    
-    _imageScrollVC = [[ISUFDetailedImageViewController alloc]init];
-    _imageScrollVC.navigationController = self.navigationController;
-    
-    _imageScrollVC.view.frame  = self.view.bounds;
-    [_imageScrollVC.view addSubview:_imageScrollView];
-    
-    
-    
-    //tap gesture to hide unhide navbar 
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideNavBar)];
-    [_imageScrollView addGestureRecognizer:tapGesture];
-    tapGesture.cancelsTouchesInView = false;
-    //view bounces when using the below code
-    //    self.navigationController.hidesBarsOnTap = YES;
-    
-    //fix the black bar issue, when the navbar is set to hidden
-    CGPoint scrollViewOffset = _imageScrollView.contentOffset;
-    scrollViewOffset.y = 64;
-    [_imageScrollView setContentOffset:scrollViewOffset animated:YES];
-    CGSize svContentSize = _imageScrollView.contentSize;
-    svContentSize.height -= 64;
-    imageScrollView.contentSize = svContentSize;
-    
-    //right button
-    _imageScrollVC.navigationController.navigationBar.topItem.title = @"hi";
-    UIBarButtonItem *choiceBt = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionsheet)];
-    
-    _imageScrollVC.navigationItem.rightBarButtonItem = choiceBt;
-    _imageScrollVC.navigationItem.title = @"Detailed VC";
-//    imageScrollVC.navigationController.navigationItem.rightBarButtonItem = choiceBt;
-    [self.navigationController pushViewController:_imageScrollVC animated:YES];
-//
-//    self.navigationController.topViewController.navigationItem.rightBarButtonItem = choiceBt;
-    
-}
+
 
 
 -(void)hideNavBar{

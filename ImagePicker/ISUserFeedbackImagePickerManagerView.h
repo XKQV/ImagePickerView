@@ -11,26 +11,19 @@
 #import "ISUFCollectionViewCell.h"
 #import <QBImagePickerController/QBImagePickerController.h>
 NS_ASSUME_NONNULL_BEGIN
-//@protocol ISUFDetailedScrollImageViewdelegate <NSObject>
-//
-//-(void)presentDetailedScrollImageView:(UIScrollView *)imageScrollView;
-//
-//@end
+
 
 
 @interface ISUserFeedbackImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUFCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UIView *mainView;
 
 @property (nullable, nonatomic, strong) NSMutableArray *imageArray;
-@property (nonatomic, assign) CGRect collectionViewFrame;
 
-//@property (weak, nonatomic) id<ISUFDetailedScrollImageViewdelegate>delegate;
 
 -(void)updateCollectionViewHeight;
-//-(void)detailedImageViewAtIndex:(int)index;
-- (instancetype)initWithFrame:(CGRect)frame andCellSize:(CGSize)size;
+
+- (instancetype)initWithFrame:(CGRect)collectionViewFrame CellSize:(CGSize)size labelTitle:(NSString *)title labelFrame:(CGRect)labelFrame labelFont:(UIFont *)font;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ISUserFeedbackImagePickerManagerView.h"
-#import "ISUFDetailedImageViewController.h"
+
 @interface ViewController : UIViewController
 
 @end

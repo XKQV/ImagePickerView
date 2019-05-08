@@ -10,7 +10,6 @@
 		1C1EB17BADD16BF1703067B7 /* libPods-ImagePickerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 463C4A88676FD4A7F91D1985 /* libPods-ImagePickerUITests.a */; };
 		BE74C86CCF65BC490DACEB29 /* libPods-ImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE838C6E4A10D82ABA68355E /* libPods-ImagePicker.a */; };
 		E58A3623D693E3F5E2CA13AF /* libPods-ImagePickerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F7A9A7C57512547A216B5 /* libPods-ImagePickerTests.a */; };
-		EA2377152281545A000A683E /* ISUFDetailedImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2377142281545A000A683E /* ISUFDetailedImageViewController.m */; };
 		EA2BB61E227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */; };
 		EA2BB621227FBFF50006319E /* ISUFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2BB620227FBFF50006319E /* ISUFCollectionViewCell.m */; };
 		EA2BB624227FE0640006319E /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = EA2BB623227FE0630006319E /* 2.png */; };
@@ -51,8 +50,6 @@
 		9354772086857E3E5AD67D1F /* Pods-ImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagePicker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImagePicker/Pods-ImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
 		BE838C6E4A10D82ABA68355E /* libPods-ImagePicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImagePicker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF6DA9A0AC1EB6355BA9B661 /* Pods-ImagePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImagePicker.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImagePicker/Pods-ImagePicker.release.xcconfig"; sourceTree = "<group>"; };
-		EA2377132281545A000A683E /* ISUFDetailedImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUFDetailedImageViewController.h; sourceTree = "<group>"; };
-		EA2377142281545A000A683E /* ISUFDetailedImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISUFDetailedImageViewController.m; sourceTree = "<group>"; };
 		EA2BB61C227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUserFeedbackImagePickerManagerView.h; sourceTree = "<group>"; };
 		EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISUserFeedbackImagePickerManagerView.m; sourceTree = "<group>"; };
 		EA2BB61F227FBFF50006319E /* ISUFCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISUFCollectionViewCell.h; sourceTree = "<group>"; };
@@ -170,8 +167,6 @@
 				EA4C18B122783ED800162249 /* LaunchScreen.storyboard */,
 				EA4C18B422783ED800162249 /* Info.plist */,
 				EA4C18B522783ED800162249 /* main.m */,
-				EA2377132281545A000A683E /* ISUFDetailedImageViewController.h */,
-				EA2377142281545A000A683E /* ISUFDetailedImageViewController.m */,
 				EA2BB61C227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.h */,
 				EA2BB61D227EFE5D0006319E /* ISUserFeedbackImagePickerManagerView.m */,
 				EA2BB61F227FBFF50006319E /* ISUFCollectionViewCell.h */,
@@ -409,7 +404,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA4C18AB22783ED700162249 /* ViewController.m in Sources */,
-				EA2377152281545A000A683E /* ISUFDetailedImageViewController.m in Sources */,
 				EA4C18B622783ED800162249 /* main.m in Sources */,
 				EA2BB621227FBFF50006319E /* ISUFCollectionViewCell.m in Sources */,
 				EA4C18A822783ED700162249 /* AppDelegate.m in Sources */,
