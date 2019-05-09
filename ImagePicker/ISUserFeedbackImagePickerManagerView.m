@@ -131,7 +131,7 @@
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
         
-    }else if(_imageArray.count <= 6 || self.maxImages <= 6 ){
+    }else if(_imageArray.count < 6 || self.maxImages <= 6 ){
         collectionViewframe.size.height = self.cellEdge * 3 + self.cellItemWidth * 2;
         self.collectionView.frame = collectionViewframe;
         
