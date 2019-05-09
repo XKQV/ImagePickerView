@@ -86,6 +86,8 @@
     return cell;
 }
 
+
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
@@ -122,14 +124,14 @@
     }
     CGRect mainviewFrame = self.frame;
     CGRect collectionViewframe = self.collectionView.frame;
-    if (_imageArray.count < 3) {
+    if (_imageArray.count < 3 || self.maxImages <= 3) {
         collectionViewframe.size.height = self.cellEdge * 2 + self.cellItemWidth;
         self.collectionView.frame = collectionViewframe;
         
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
         
-    }else if(_imageArray.count < 6){
+    }else if(_imageArray.count <= 6 || self.maxImages <= 6 ){
         collectionViewframe.size.height = self.cellEdge * 3 + self.cellItemWidth * 2;
         self.collectionView.frame = collectionViewframe;
         
@@ -143,6 +145,8 @@
         mainviewFrame.size.height = _titleLabelFrame.size.height + collectionViewframe.size.height;
         self.frame = mainviewFrame;
     }
+    
+    [self.delegate viewviewDidChangeHeight];
     
 }
 -(void)layoutSubviews{
@@ -271,12 +275,15 @@
                     [weakSelf.imageArray addObject:img];
                     [self updateCollectionViewHeight];
                     [weakSelf.collectionView reloadData];
+                    
                 }else {
-                    [self performSelectorOnMainThread:@selector(okAlertControllerWithMessage:) withObject:@"Please select no more than 9 images" waitUntilDone:YES];
+                    [self performSelectorOnMainThread:@selector(okAlertControllerWithMessage:) withObject:[NSString stringWithFormat:@"Please select no more than %d images", self.maxImages] waitUntilDone:YES];
                 }
             }else {
                 [self performSelectorOnMainThread:@selector(okAlertControllerWithMessage:) withObject:@"Please only select images" waitUntilDone:YES];
             }
+            
+            
             
         }];
     }

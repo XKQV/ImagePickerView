@@ -11,11 +11,17 @@
 #import "ISUserFeedbackCollectionViewCell.h"
 #import <QBImagePickerController/QBImagePickerController.h>
 NS_ASSUME_NONNULL_BEGIN
+@protocol viewDidChangeHeightDelegate <NSObject>
 
+- (void)viewviewDidChangeHeight;
+
+@end
 
 
 @interface ISUserFeedbackImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUserFeedbackCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
+
+@property (nonatomic, weak) id<viewDidChangeHeightDelegate>delegate;
 
 //The selected images can be access by this array
 @property (nullable, nonatomic, strong) NSMutableArray *imageArray;
