@@ -1,5 +1,5 @@
 //
-//  ISUFImagePickerManager.h
+//  ImagePickerManager.h
 //  ImagePicker
 //
 //  Created by 董志玮 on 2019/5/5.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "ISUserFeedbackCollectionViewCell.h"
+#import "CollectionViewCell.h"
 #import <QBImagePickerController/QBImagePickerController.h>
 NS_ASSUME_NONNULL_BEGIN
 @protocol viewDidChangeHeightDelegate <NSObject>
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface ISUserFeedbackImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ISUserFeedbackCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
+@interface ImagePickerManagerView : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,QBImagePickerControllerDelegate>
 
 
 @property (nonatomic, weak) id<viewDidChangeHeightDelegate>delegate;

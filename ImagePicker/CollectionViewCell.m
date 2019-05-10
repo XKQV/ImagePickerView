@@ -1,14 +1,14 @@
 //
-//  ISUFCollectionViewCell.m
+//  CollectionViewCell.m
 //  ImagePicker
 //
 //  Created by 董志玮 on 2019/5/6.
 //  Copyright © 2019 董志玮. All rights reserved.
 //
 
-#import "ISUserFeedbackCollectionViewCell.h"
+#import "CollectionViewCell.h"
 
-@implementation ISUserFeedbackCollectionViewCell
+@implementation CollectionViewCell
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

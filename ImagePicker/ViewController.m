@@ -10,7 +10,7 @@
 
 
 @interface ViewController ()<viewDidChangeHeightDelegate>
-@property (nonatomic, strong) ISUserFeedbackImagePickerManagerView *manager;
+@property (nonatomic, strong) ImagePickerManagerView *manager;
 @property (nonatomic, strong) UIScrollView *imageScrollView;
 @property (nonatomic, strong) UIButton *imageBt2;
 @end
@@ -28,7 +28,7 @@
     [self.view addSubview:imageBt];
     
     //init the view
-    self.manager = [[ISUserFeedbackImagePickerManagerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame) + 20, [UIScreen mainScreen].bounds.size.width, 120) cellEdge:10.0 labelTitle:@"图片问题（选填）" labelFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame), 200, 20) labelFont:[UIFont systemFontOfSize:16] maxNumberOfImages:6];
+    self.manager = [[ImagePickerManagerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame) + 20, [UIScreen mainScreen].bounds.size.width, 120) cellEdge:10.0 labelTitle:@"图片问题（选填）" labelFrame:CGRectMake(0, CGRectGetMaxY(imageBt.frame), 200, 20) labelFont:[UIFont systemFontOfSize:16] maxNumberOfImages:9];
 
     self.manager.delegate = self;
     
@@ -40,7 +40,7 @@
     [self.imageBt2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.imageBt2 setTitle:@"Email" forState:UIControlStateNormal];
     [self.view addSubview:self.imageBt2];
-
+    
    
     
 }

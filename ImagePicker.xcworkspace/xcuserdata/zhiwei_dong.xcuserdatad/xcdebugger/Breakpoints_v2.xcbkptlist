@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImagePicker/ViewController.m"
-            timestampString = "579072995.922039"
+            timestampString = "579173395.221943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "55"
@@ -340,12 +340,12 @@
                   moduleName = "ImagePicker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhiwei_dong/Desktop/ImagePicker%20to%20UIView/ImagePicker/ViewController.m"
-                  timestampString = "579058419.467307"
+                  timestampString = "579077448.694093"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
                   endingLineNumber = "55"
-                  offsetFromSymbolStart = "80">
+                  offsetFromSymbolStart = "55">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -355,12 +355,12 @@
                   moduleName = "ImagePicker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhiwei_dong/Desktop/ImagePicker%20to%20UIView/ImagePicker/ViewController.m"
-                  timestampString = "579058419.469344"
+                  timestampString = "579077448.697601"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
                   endingLineNumber = "55"
-                  offsetFromSymbolStart = "108">
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -372,12 +372,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImagePicker/ISUserFeedbackImagePickerManagerView.m"
-            timestampString = "579072995.922614"
+            timestampString = "579172873.0012389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
             endingLineNumber = "127"
             landmarkName = "-updateCollectionViewHeight"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImagePicker/ISUserFeedbackImagePickerManagerView.m"
+            timestampString = "579172873.0014941"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
+            landmarkName = "-qb_imagePickerController:didFinishPickingAssets:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImagePicker/ISUserFeedbackImagePickerManagerView.m"
+            timestampString = "579172873.001714"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "-qb_imagePickerController:didFinishPickingAssets:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

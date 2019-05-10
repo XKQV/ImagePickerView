@@ -1,5 +1,5 @@
 //
-//  ISUFCollectionViewCell.h
+//  CollectionViewCell.h
 //  ImagePicker
 //
 //  Created by 董志玮 on 2019/5/6.
@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol ISUserFeedbackCellDelegate <NSObject>
+@protocol CellDelegate <NSObject>
 
 -(void)pressedDeleteButtonTag:(int)tag;
 
 @end
-@interface ISUserFeedbackCollectionViewCell : UICollectionViewCell
+@interface CollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) UIImageView *topImageView;
 
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UIButton *deleteButton;
 
-@property (weak, nonatomic) id<ISUserFeedbackCellDelegate>delegate;
+@property (weak, nonatomic) id<CellDelegate>delegate;
 
 @end
 
